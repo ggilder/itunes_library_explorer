@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'irb'
+
+begin
+  library_path = ARGV.shift || raise("Please provide a path to an exported iTunes Library XML file.")
+
+  # Proxy for eventual loading code
+  raise "Unable to read iTunes library from #{library_path}" unless File.readable?(library_path)
+rescue => e
+  $stderr.puts e.message
+  exit 1
+end
+
+Library = "not ready yet but will eventually read #{library_path}"
+
+ARGV.clear # otherwise all script parameters get passed to IRB
+IRB.start
