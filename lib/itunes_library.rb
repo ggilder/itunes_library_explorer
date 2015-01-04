@@ -48,9 +48,11 @@ class ItunesLibrary
   private
 
   class TrackStore
+    include Enumerable
+
     attr_reader :all
 
-    delegate :fetch, :count, to: :all
+    delegate :fetch, :each, :values, to: :all
 
     def initialize(data)
       @all = Hash[
@@ -65,6 +67,10 @@ class ItunesLibrary
       "#<ItunesLibrary::TrackStore:0x#{id}, #{count} tracks>"
     end
     alias_method :inspect, :to_s
+
+    def audio_files
+      values.select(&:audio_file?)
+    end
 
     class Track
       attr_reader :info
@@ -88,6 +94,10 @@ class ItunesLibrary
 
       def album
         info['Album'] || 'Unknown Album'
+      end
+
+      def audio_file?
+        info['Kind'] =~ / audio file$/
       end
     end
   end

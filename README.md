@@ -24,4 +24,7 @@ Interactive tool for exploring an iTunes library export.
     # Show playlists contained in a folder playlist
     pp Library.playlists.find_by_name('Cool folder').playlists; nil
 
+    # Show all audio file tracks
+    pp Library.tracks.audio_files; nil
+
 Both playlists and tracks have a `info` method to return the raw information from the library XML.
