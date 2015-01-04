@@ -1,6 +1,13 @@
 #!/usr/bin/env ruby
 
+require 'bundler'
+Bundler.require
+
 require 'irb'
+require 'pp'
+
+$LOAD_PATH.unshift File.expand_path(File.join(%w(.. lib)), File.dirname(__FILE__))
+require 'itunes_library'
 
 begin
   library_path = ARGV.shift || raise("Please provide a path to an exported iTunes Library XML file.")
@@ -12,7 +19,8 @@ rescue => e
   exit 1
 end
 
-Library = "not ready yet but will eventually read #{library_path}"
+Library = ItunesLibrary.new(library_path)
 
 ARGV.clear # otherwise all script parameters get passed to IRB
+puts "iTunes library loaded into `Library`."
 IRB.start
